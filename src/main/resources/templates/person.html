@@ -19,5 +19,12 @@
             <td th:text="${person.firstname}"></td>
         </tr>
     </table>
+
+    <form action="#" th:action="@{/persons/put}" method="post">
+        <input type="text" name="firstname">
+        <input type="text" name="lastname">
+        <input type="submit" value="Submit">
+    </form>
+
 </body>
 </html>
