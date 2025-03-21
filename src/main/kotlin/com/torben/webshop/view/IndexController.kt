@@ -1,14 +1,14 @@
-package com.torben.webshop
+package com.torben.webshop.view
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 
 @Controller
-class PersonController {
+class IndexController {
 
-    @GetMapping("/person")
+    @GetMapping("", "/")
     fun show(): String {
-        return "person"
+        return "forward:/index.html"
     }
 
 }

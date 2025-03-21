@@ -82,9 +82,9 @@ dependencies {
 
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 
-	testImplementation("")
-
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	testImplementation("org.assertj:assertj-core:3.27.2")
 
 }
 
