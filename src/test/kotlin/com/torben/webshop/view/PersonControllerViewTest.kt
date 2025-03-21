@@ -3,9 +3,7 @@ package com.torben.webshop.view
 import com.torben.webshop.model.PersonEntity
 import com.torben.webshop.service.PersonService
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers
 import org.mockito.BDDMockito.*
-import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -28,7 +26,7 @@ class PersonControllerViewTest {
     private lateinit var mockMvc: MockMvc
 
     @MockitoBean
-    private lateinit var personService: PersonService;
+    private lateinit var personService: PersonService
 
     @Test
     fun shouldShow() {
@@ -38,23 +36,40 @@ class PersonControllerViewTest {
                 PersonEntity(1, "Torben", "Joneit"),
                 PersonEntity(2, "Fachher", "Syed")
             )
-        );
+        )
 
         // when
         val result = mockMvc.perform(get(ENDPOINT))
 
         // then
-        result.andExpect(status().isOk())
-        result.andExpect(model().attributeExists("persons"))
-        // TODO: Test for user given by mock
+        result.andExpect{
+            status().isOk()
+            model().attributeExists("persons")
+            model().attribute("persons", listOf(
+                PersonEntity(1, "Torben", "Joneit"),
+                PersonEntity(2, "Fachher", "Syed")
+            ))
+        }
     }
 
     @Test
     fun shouldPut() {
         // when
-        mockMvc.perform(post(ENDPOINT).param("firstname", "Hans").param("lastname", "Meiser"));
+        mockMvc.perform(post(ENDPOINT).param("firstname", "Hans").param("lastname", "Meiser"))
 
         // then
-        Mockito.verify(personService).createPerson("Hans", "Meiser");
+        verify(personService).createPerson("Hans", "Meiser")
+    }
+
+    @Test
+    fun shouldError() {
+        // when
+        val result = mockMvc.perform(post(ENDPOINT).param("firstname", "").param("lastname", ""))
+
+        // then
+        result.andExpect {
+            status().isOk
+            model().attributeExists("error", "emptyFields")
+        }
     }
 }

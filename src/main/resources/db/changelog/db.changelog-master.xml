@@ -38,17 +38,9 @@
                 existingTableName="person"  existingColumnName="state"
                 newTableName="state"  newColumnName="id"  newColumnDataType="char(2)"/>
     </changeSet>
-    <changeSet id="1742464440762-1" author="trivaris">
+    <changeSet id="1742464440762-1" author="torben">
         <insert tableName="state">
             <column name="id" value="DE"/>
         </insert>
     </changeSet>
-    <changeSet id="1742464174305-1" author="trivaris">
-        <insert tableName="person">
-            <column name="firstname" value="Torben"/>
-            <column name="lastname" value="Joneit"/>
-            <column name="state" value="DE"/>
-        </insert>
-    </changeSet>
-
 </databaseChangeLog>

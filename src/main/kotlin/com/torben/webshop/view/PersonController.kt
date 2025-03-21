@@ -7,26 +7,38 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 @RequestMapping("/person")
 @Controller
 class PersonController(
-    private final var personService: PersonService
+    private var personService: PersonService
 ) {
     @GetMapping
-    fun show(model: Model): String {
+    fun show(model: Model, @RequestParam(required = false) error: String?): String {
         val all = personService.findAll()
         model.addAttribute("persons", all)
-        model.addAttribute("createForm", PersonCreateForm("", ""))
+        model.addAttribute("createForm", PersonCreateForm())
+
+        when (error) {
+            "emptyFields" -> model.addAttribute("error", "Please fill out all fields.")
+        }
+
         return "person"
     }
 
     @PostMapping
-    fun put(@ModelAttribute personCreateForm: PersonCreateForm) {
-
+    fun put(@ModelAttribute personCreateForm: PersonCreateForm): String {
         val firstname = personCreateForm.firstname
         val lastname = personCreateForm.lastname
 
-        personService.createPerson(firstname, lastname)
+        val params = StringBuilder().apply { append("?") }
+
+        if (firstname.isEmpty() || lastname.isEmpty())
+            params.append("error=emptyFields")
+        else personService.createPerson(firstname, lastname)
+
+
+        return "redirect:/person$params"
     }
 }
