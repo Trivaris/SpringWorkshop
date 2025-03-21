@@ -1,4 +1,4 @@
-package com.torben.webshop
+package com.torben.webshop.model
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

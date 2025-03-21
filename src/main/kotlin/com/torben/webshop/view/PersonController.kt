@@ -1,4 +1,4 @@
-package com.torben.webshop
+package com.torben.webshop.view
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
