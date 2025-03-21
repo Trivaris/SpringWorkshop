@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 
 @Controller
-class UsersController {
+class PersonController {
 
-    @GetMapping("/users")
+    @GetMapping("/person")
     fun show(): String {
-        return "users"
+        return "person"
     }
 
 }
